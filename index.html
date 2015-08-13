@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html ng-app="reddit-app">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular Reddit Clone</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js"></script>
+	<script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <nav class="navbar navbar-default" role="navigation">
+	  <!-- Brand and toggle get grouped for better mobile display -->
+	  <div class="navbar-header">
+
+	    <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+	      <span class="sr-only">Toggle navigation</span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	    <a class="navbar-brand" href="#">Reddit Clone</a>
+	  </div>
+
+	  <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
+	  
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#modal" data-toggle="modal">Post +</a></li>
+	              
+	      <li dropdown>
+	        <a href="#" dropdown-toggle>Sort by<b class="caret"></b></a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#">Action</a></li>
+	          <li><a href="#">Another action</a></li>
+	          <li><a href="#">Something else here</a></li>
+	          <li><a href="#">Separated link</a></li>
+	          <li><a href="#">One more separated link</a></li>
+	        </ul>
+	      </li>
+
+	    <form class="navbar-form navbar-left" role="search">
+	      <div class="form-group">
+	        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+	      </div>
+	      <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+	    </form>
+
+	  </div><!-- /.navbar-collapse -->
+  </nav>
+
+  <div class="container-fluid">
+    <form name="post_form" ng-submit="addPost(newPost)">
+        <div class="form-group" ng-class="{ 'has-error': userForm.name.$invalid }" >
+          <label class="control-label">Name</label>
+          <input type="text" class="form-control" name="name" ng-model="user.name" required placeholder="Name" />
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': userForm.email.$invalid }" >
+          <label class="control-label">Email</label>
+          <input type="email" class="form-control" name="email" ng-model="user.email" required placeholder="Email" />
+        </div>
+        <button class="btn btn-primary" ng-click="save()">Add User</button>
+        <button class="btn btn-link" ng-click="reset()">Reset</button>
+    </form>
+  </div> 
+
+  <div class="row" ng-controller="PostCtrl">
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail" ng-repeat="post in posts | filter:searchText">
+    	<img ng-src={{post.img}}>
+    	<div class="caption">
+    	   <h3>{{post.title}}</h3>
+    	   <p class="text-info"><a ng-href="#">{{post.author}}</a> 
+    	     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+    	     {{post.date}}
+    	   </p>
+    	   <p>{{post.body}}</p>
+    	   <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">View Comments</button>
+    	   <div collapse="isCollapsed">
+    	     <div class="well well-lg">
+    	       <li ng-repeat="comment in post.comments">
+    	         <p class="text-primary">
+    	           <strong>{{comment.author}}:</strong>
+				   {{comment.body}}
+				 </p>	
+    	        </li>
+    	     </div>
+    	   </div>
+    	</div>
+      </div>
+    </div>   	
+  </div>
+
+  <div ng-controller="CollapseDemoCtrl">
+	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
+	<hr>
+	<div collapse="isCollapsed">
+		<div class="well well-lg">Some content</div> 
+	</div>
+  </div>
+	
+  <div ng-controller="ButtonsCtrl">
+      <h4>Single toggle</h4>
+      <pre>{{singleModel}}</pre>
+      <button type="button" class="btn btn-primary" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+          Single Toggle
+      </button>
+      <h4>Checkbox</h4>
+      <pre>Model: {{checkModel}}</pre>
+      <pre>Results: {{checkResults}}</pre>
+      <div class="btn-group">
+          <label class="btn btn-primary" ng-model="checkModel.left" btn-checkbox>Left</label>
+          <label class="btn btn-primary" ng-model="checkModel.middle" btn-checkbox>Middle</label>
+          <label class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</label>
+      </div>
+      <h4>Radio &amp; Uncheckable Radio</h4>
+      <pre>{{radioModel || 'null'}}</pre>
+      <div class="btn-group">
+          <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Left'">Left</label>
+          <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Middle'">Middle</label>
+          <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Right'">Right</label>
+      </div>
+      <div class="btn-group">
+          <label class="btn btn-success" ng-model="radioModel" btn-radio="'Left'" uncheckable>Left</label>
+          <label class="btn btn-success" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Middle</label>
+          <label class="btn btn-success" ng-model="radioModel" btn-radio="'Right'" uncheckable>Right</label>
+      </div>
+  </div>	
+</body>
+</html>
