@@ -1,4 +1,4 @@
-var app = angular.module("reddit-app", ['ngSanitize', 'ui.bootstrap']);
+var app = angular.module("reddit-app", ['ngSanitize', 'ui.bootstrap', 'ngAnimate']);
 
 app.controller('MainCtrl', function($scope, PostService){
   $scope.posts = PostService.getPosts();
@@ -10,6 +10,7 @@ app.controller('PostCtrl', function($scope, PostService){
 
   $scope.addPost = function (post){
   	post.id = $scope.posts.length;
+  	post.date = new Date();
   	postToPush = {
   		id: post.id,
   		title: post.title,
@@ -19,6 +20,7 @@ app.controller('PostCtrl', function($scope, PostService){
   		body: post.body
   	   }
   	$scope.posts.push(postToPush);
+  	$scope.newPost = {};
   	$scope.post_form.$setPristine();
   };
 
@@ -73,9 +75,9 @@ app.factory("PostService", [function () {
   }
 
   var PostList = [
-    {id: 0, title: 'Malibu', author: 'Damon', date:'Saturday 4:20pm', img: "http://hdontap.com/images/uploads/gallery_images/63/breaking-point-malibu-631.jpg", body:'I was in Malibu, blazin up with the homies. Dippin in the cool ocean, sipping wine & beers.', comments: [{author:"Casey", body: "That was chill"}, {author:"Stephen", body: "Those fish tacos were bomb"}] },
-    {id: 1, title: 'Sedona', author: 'Stephen', date:'Monday 6:14pm', img: "http://phoenixsedonadaytrip.com/wp-content/uploads/2010/09/Sedona-2-small1.jpg", body:'Solo trip. I need some fresh landscapes', comments: [{author:"Jean-Bastiste", body: "A la prochaine"}, {author:"Stephen", body: "Thanks JB, bon voyage"}] },
-    {id: 2, title: 'Vegas', author: 'Casey', date:'Wednesday 10:44pm', img: "http://addictedtocostco.com/wp-content/uploads/2015/03/20150317-1.jpg", body:'I was here for the Blackhat Hacker Conference', comments: [{author:"Casey", body: "Damn I wish I could just been alone!"}, {author:"Stephen", body: "Woops, I probably shouldn't of come"}] },  
+    {id: 0, title: 'Malibu', author: 'Damon', date: new Date(), img: "http://hdontap.com/images/uploads/gallery_images/63/breaking-point-malibu-631.jpg", body:'I was in Malibu, blazin up with the homies. Dippin in the cool ocean, sipping wine & beers.', comments: [{author:"Casey", body: "That was chill"}, {author:"Stephen", body: "Those fish tacos were bomb"}] },
+    {id: 1, title: 'Sedona', author: 'Stephen', date: new Date(), img: "http://phoenixsedonadaytrip.com/wp-content/uploads/2010/09/Sedona-2-small1.jpg", body:'Solo trip. I need some fresh landscapes', comments: [{author:"Jean-Bastiste", body: "A la prochaine"}, {author:"Stephen", body: "Thanks JB, bon voyage"}] },
+    {id: 2, title: 'Vegas', author: 'Casey', date: new Date(), img: "http://addictedtocostco.com/wp-content/uploads/2015/03/20150317-1.jpg", body:'I was here for the Blackhat Hacker Conference', comments: [{author:"Casey", body: "Damn I wish I could just been alone!"}, {author:"Stephen", body: "Woops, I probably shouldn't of come"}] },  
   ];
 
   return factory;

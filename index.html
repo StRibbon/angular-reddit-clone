@@ -5,7 +5,9 @@
 	<title>Angular Reddit Clone</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css">
 	<link rel="stylesheet" href="style.css">
+	<link href="animations.css" rel="stylesheet" type="text/css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-animate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js"></script>
 	<script src="app.js"></script>
@@ -29,7 +31,7 @@
 	  <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
 	  
 	    <ul class="nav navbar-nav">
-	      <li class="active"><a href="#modal" data-toggle="modal">Post +</a></li>
+	      <li class="active"><a href="#" ng-click="bool=true">Post +</a></li>
 	              
 	      <li dropdown>
 	        <a href="#" dropdown-toggle>Sort by<b class="caret"></b></a>
@@ -52,17 +54,25 @@
 	  </div><!-- /.navbar-collapse -->
   </nav>
 
-  <div class="container-fluid">
-    <form name="post_form" ng-submit="addPost(newPost)">
-        <div class="form-group" ng-class="{ 'has-error': userForm.name.$invalid }" >
-          <label class="control-label">Name</label>
-          <input type="text" class="form-control" name="name" ng-model="user.name" required placeholder="Name" />
+  <div ng-controller="PostCtrl" class="container-fluid bool" ng-show="bool">
+    <form ng-submit="addPost(newPost)" name="post_form">
+        <div class="form-group" ng-class="{ 'has-error': post_form.title.$dirty && post_form.title.$invalid }" >
+          <label class="control-label">Title</label>
+          <input type="text" class="form-control" name="title" ng-model="newPost.title" required placeholder="Title" />
         </div>
-        <div class="form-group" ng-class="{ 'has-error': userForm.email.$invalid }" >
-          <label class="control-label">Email</label>
-          <input type="email" class="form-control" name="email" ng-model="user.email" required placeholder="Email" />
+        <div class="form-group" ng-class="{ 'has-error':post_form.author.$dirty && post_form.author.$invalid }" >
+          <label class="control-label">Author</label>
+          <input type="text" class="form-control" name="author" ng-model="newPost.author" required placeholder="Author" />
         </div>
-        <button class="btn btn-primary" ng-click="save()">Add User</button>
+        <div class="form-group" ng-class="{ 'has-error':post_form.body.$dirty && post_form.body.$invalid }" >
+          <label class="control-label">Body</label>
+          <input type="text" class="form-control" name="body" ng-model="newPost.body" required placeholder="Body" />
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': post_form.img.$dirty && post_form.img.$invalid }" >
+          <label class="control-label">Image URL</label>
+          <input type="text" class="form-control" name="img" ng-model="newPost.img" required placeholder="Image URL" />
+        </div>
+        <button class="btn btn-primary" type="submit" ng-click="bool=false">Add Post</button>
         <button class="btn btn-link" ng-click="reset()">Reset</button>
     </form>
   </div> 
@@ -75,7 +85,7 @@
     	   <h3>{{post.title}}</h3>
     	   <p class="text-info"><a ng-href="#">{{post.author}}</a> 
     	     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-    	     {{post.date}}
+    	     {{post.date | date:"EEEE, MM/dd/yy 'at' h:mma"}}
     	   </p>
     	   <p>{{post.body}}</p>
     	   <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">View Comments</button>
@@ -94,7 +104,7 @@
     </div>   	
   </div>
 
-  <div ng-controller="CollapseDemoCtrl">
+  <!-- <div ng-controller="CollapseDemoCtrl">
 	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
 	<hr>
 	<div collapse="isCollapsed">
@@ -128,6 +138,6 @@
           <label class="btn btn-success" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Middle</label>
           <label class="btn btn-success" ng-model="radioModel" btn-radio="'Right'" uncheckable>Right</label>
       </div>
-  </div>	
+  </div>	 -->
 </body>
 </html>

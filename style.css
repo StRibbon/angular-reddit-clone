@@ -1,10 +1,9 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 img{
 	width:350px;
 }
-.comment-li :nth-child(even){
- color: red;
-}
-.comment-li :nth-child(odd){
- color: blue;
+.fade.ng-hide {
+  transition:0.5s linear all;
+  opacity:0;
 }
