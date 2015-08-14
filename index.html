@@ -87,9 +87,26 @@
     	     {{post.date | date:"EEEE, MM/dd/yy 'at' h:mma"}}
     	   </p>
     	   <p>{{post.body}}</p>
-    	   <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">View Comments</button>
+    	   <button type="button" class="btn btn-default btn-sm" ng-click="isCollapsed = !isCollapsed">Add or View Comments</button>
+    	   <button type="button" class="btn btn-danger btn-sm black" ng-click="removePost(post)">Remove Post</button>
+
+    	   
     	   <div collapse="isCollapsed">
     	     <div class="well well-lg">
+    	       
+    	       <form name="comment_form" ng-submit="addComment(post, newComment)">
+    	         <div class="form-group" ng-class="{ 'has-error': comment_form.author.$dirty && comment_form.author.$invalid }" >
+                   <label class="control-label">Author</label>
+                   <input type="text" class="form-control" name="author" ng-model="newComment.author" required placeholder="Author" />
+                 </div>
+                 <div class="form-group" ng-class="{ 'has-error': comment_form.body.$dirty && comment_form.body.$invalid }" >
+                   <label class="control-label">Body</label>
+                   <input type="text" class="form-control" name="body" ng-model="newComment.body" required placeholder="Author" />
+                 </div>
+                 <button class="btn btn-primary btn-sm" type="submit">Add Comment</button>
+              
+               </form>
+
     	       <li ng-repeat="comment in post.comments">
     	         <p class="text-primary">
     	           <strong>{{comment.author}}:</strong>

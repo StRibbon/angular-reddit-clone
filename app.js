@@ -35,6 +35,18 @@ app.controller('PostCtrl', function($scope, PostService){
   	$scope.removed = 'Post successfully removed.';
   };
 
+  $scope.addComment = function (post, comment){
+  	commentToPush = {
+  		author: comment.author,
+  		body: comment.body
+  	   }
+  	$scope.newComment = {};   
+  	post.comments.push(commentToPush);
+  	
+  	
+  	$scope.comment_form.$setPristine();
+  }
+
   $scope.addVote = function (post){
   	post.votes += 1;
   }
