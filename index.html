@@ -12,7 +12,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js"></script>
 	<script src="app.js"></script>
 </head>
-<body ng-controller="MainCtrl">
+<body ng-controller="PostCtrl">
 
   <nav class="navbar navbar-default" role="navigation">
 	  <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,7 +31,7 @@
 	  <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
 	  
 	    <ul class="nav navbar-nav">
-	      <li class="active"><a href="#" ng-click="bool=true">Post +</a></li>
+	      <li class="active"><a href="#" ng-click="isDropped = !isDropped">Post +</a></li>
 	              
 	      <li dropdown>
 	        <a href="#" dropdown-toggle>Sort by<b class="caret"></b></a>
@@ -54,7 +54,7 @@
 	  </div><!-- /.navbar-collapse -->
   </nav>
 
-  <div ng-controller="PostCtrl" class="container-fluid bool" ng-show="bool">
+  <div class="container-fluid post_form" collapse="isDropped">
     <form ng-submit="addPost(newPost)" name="post_form">
         <div class="form-group" ng-class="{ 'has-error': post_form.title.$dirty && post_form.title.$invalid }" >
           <label class="control-label">Title</label>
@@ -72,12 +72,12 @@
           <label class="control-label">Image URL</label>
           <input type="text" class="form-control" name="img" ng-model="newPost.img" required placeholder="Image URL" />
         </div>
-        <button class="btn btn-primary" type="submit" ng-click="bool=false">Add Post</button>
+        <button class="btn btn-primary" type="submit" ng-click="isDropped = !isDropped">Add Post</button>
         <button class="btn btn-link" ng-click="reset()">Reset</button>
     </form>
   </div> 
 
-  <div class="row" ng-controller="PostCtrl">
+  <div class="row">
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail" ng-repeat="post in posts | filter:searchText">
     	<img ng-src={{post.img}}>

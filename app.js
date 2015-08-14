@@ -1,11 +1,15 @@
 var app = angular.module("reddit-app", ['ngSanitize', 'ui.bootstrap', 'ngAnimate']);
 
-app.controller('MainCtrl', function($scope, PostService){
-  $scope.posts = PostService.getPosts();
-});
+// app.controller('MainCtrl', function($scope, PostService){
+ 
+//   $scope.posts = PostService.getPosts();
+// });
 
 app.controller('PostCtrl', function($scope, PostService){
   $scope.isCollapsed = true;
+  $scope.isDropped = true;
+  $scope.bool = false;
+
   $scope.posts = PostService.getPosts();
 
   $scope.addPost = function (post){
