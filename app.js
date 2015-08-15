@@ -43,7 +43,6 @@ app.controller('PostCtrl', function($scope, PostService){
   	  
   	post.comments.push(commentToPush);
   	this.newComment = {}; 
-  	
   	this.comment_form.$setPristine();
   }
 
