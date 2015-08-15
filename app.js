@@ -40,11 +40,11 @@ app.controller('PostCtrl', function($scope, PostService){
   		author: comment.author,
   		body: comment.body
   	   }
-  	$scope.newComment = {};   
+  	  
   	post.comments.push(commentToPush);
+  	this.newComment = {}; 
   	
-  	
-  	$scope.comment_form.$setPristine();
+  	this.comment_form.$setPristine();
   }
 
   $scope.addVote = function (post){
