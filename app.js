@@ -46,6 +46,10 @@ app.controller('PostCtrl', function($scope, PostService){
   	this.comment_form.$setPristine();
   }
 
+  $scope.removeComment = function(post,comment,$index){
+  	post.comments.splice($index,1);
+  }
+
   $scope.addVote = function (post){
   	post.votes += 1;
   }

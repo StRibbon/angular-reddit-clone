@@ -107,10 +107,11 @@
                </form>               
               <div class="comment_box">
     	       <li ng-repeat="comment in post.comments">
-    	         <p class="text-primary">
+    	         <p class="text-info">
     	           <strong>{{comment.author}}:</strong>
 				   {{comment.body}}
-				 </p>	
+				   <i class="glyphicon glyphicon-remove-circle text-danger" ng-click="removeComment(post,comment,$index)"></i>	
+				 </p>
     	        </li>
     	      </div>
     	     </div>
