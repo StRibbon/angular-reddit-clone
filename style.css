@@ -19,3 +19,7 @@ img{
 .comment_box{
 	margin-top: 10px;
 }
+
+li {
+	list-style-type: none;
+}
